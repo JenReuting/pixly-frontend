@@ -1,7 +1,6 @@
-
 import React, { useState } from "react";
 import { BrowserRouter } from "react-router-dom";
-import RoutesList from './routes-nav/RoutesList';
+import RoutesList from "./routes-nav/RoutesList";
 import PixlyApi from "./api/api";
 
 /**
@@ -12,15 +11,12 @@ import PixlyApi from "./api/api";
  */
 
 function PixlyApp() {
-
   const [currImage, setCurrImage] = useState(null);
 
   async function uploadImage(image) {
     let uploadedImage = await PixlyApi.postImage(image);
     setCurrImage(uploadedImage);
   }
-
-  console.log("currImage -----> ", currImage);
 
   return (
     <BrowserRouter>

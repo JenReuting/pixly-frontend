@@ -11,6 +11,7 @@ function ImageUploadForm({ handleUpload }) {
   //   description: ""
   // });
   const [image, setImage] = useState(null);
+
   const [imageLoading, setImageLoading] = useState(false);
   const [formErrors, setFormErrors] = useState([]);
 
@@ -21,7 +22,7 @@ function ImageUploadForm({ handleUpload }) {
     const formData = new FormData();
     formData.append("image", image);
 
-    [...formData.entries()].forEach(e => console.log(e));
+    // [...formData.entries()].forEach(e => console.log(e));
 
     try {
       await handleUpload(formData);
@@ -41,6 +42,7 @@ function ImageUploadForm({ handleUpload }) {
     setImage(f => file);
     setFormErrors([]);
   }
+
 
   return (
     <div className="ImageUploadForm">

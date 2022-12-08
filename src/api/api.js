@@ -14,7 +14,7 @@ class PixlyApi {
 
   /** Template for API requests */
 
-  static async request(endpoint, data = {}, method = "get") {
+  static async request(endpoint, data = {}, method = "get", headers = {}) {
 
     const url = `${BASE_URL}/${endpoint}`;
     const params = (method === "get")
@@ -24,7 +24,7 @@ class PixlyApi {
     try {
       // let apiData = await axios({ url, method, data, params });
       // console.log("apiData --------> ", apiData);
-      return (await axios({ url, method, data, params }));
+      return (await axios({ url, method, data, params, headers }));
     } catch (err) {
       console.error("API Error: ----> ", err);
       let msg = err.response.data.error.message;
@@ -41,7 +41,8 @@ class PixlyApi {
    *  returns: public url (str) of posted image
   */
   static async postImage(image) {
-    let resp = await this.request(`upload`, image, "post");
+    const headers = { "Content-Type": "multipart/form-data" };
+    let resp = await this.request(`upload`, image, "post", headers);
 
     return resp.data.url;
   }

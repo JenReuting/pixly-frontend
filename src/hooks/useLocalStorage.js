@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 
 /** Custom hook for keeping state data synced with localStorage.
@@ -21,15 +20,18 @@ function useLocalStorage(key, firstValue = null) {
 
   const [item, setItem] = useState(initialValue);
 
-  useEffect(function setKeyInLocalStorage() {
-    console.debug("hooks useLocalStorage useEffect", "item=", item);
+  useEffect(
+    function setKeyInLocalStorage() {
+      console.debug("hooks useLocalStorage useEffect", "item=", item);
 
-    if (item === null) {
-      localStorage.removeItem(key);
-    } else {
-      localStorage.setItem(key, item);
-    }
-  }, [key, item]);
+      if (item === null) {
+        localStorage.removeItem(key);
+      } else {
+        localStorage.setItem(key, item);
+      }
+    },
+    [key, item]
+  );
 
   return [item, setItem];
 }

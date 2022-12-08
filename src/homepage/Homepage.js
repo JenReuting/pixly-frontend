@@ -1,5 +1,16 @@
 
-
+/**
+ * Container --> UploadPage Container
+ *
+ * return
+ *  {currImage
+ *    ? < DisplayImage />
+ *    : < UploadForm />
+ * }
+ *
+ *
+ * @returns
+ */
 function Homepage() {
 
   return (

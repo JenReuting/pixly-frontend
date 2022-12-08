@@ -1,7 +1,7 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Homepage from "../homepage/Homepage";
-import ImageUpload from "../images/ImageUpload";
+import ImageUpload from "../images/ImageUploadForm";
 
 /** Site-wide routes.
  *
