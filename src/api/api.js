@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const BASE_URL = process.env.REACT_APP_API_BASE_URL;
+// const BASE_URL = process.env.REACT_APP_API_BASE_URL;
+const BASE_URL = 'http://localhost:5001';
 
 /** API Class (Static)
  *
@@ -21,9 +22,11 @@ class PixlyApi {
       : {};
 
     try {
-      return (await axios({ url, method, data, params })).data;
+      // let apiData = await axios({ url, method, data, params });
+      // console.log("apiData --------> ", apiData);
+      return (await axios({ url, method, data, params }));
     } catch (err) {
-      console.error("API Error: ----> ", err.response);
+      console.error("API Error: ----> ", err);
       let msg = err.response.data.error.message;
       throw Array.isArray(msg) ? msg : [msg];
     }
@@ -38,10 +41,9 @@ class PixlyApi {
    *  returns: public url (str) of posted image
   */
   static async postImage(image) {
-    let resp = await this.request(`upload`, "post", image);
+    let resp = await this.request(`upload`, image, "post");
 
-    console.log("response from API call--------> ", resp);
-    return resp;
+    return resp.data.url;
   }
 
 }
