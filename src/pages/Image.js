@@ -10,26 +10,45 @@ import "./Image.css";
 /** PAGE that displays a single image and all of the related
  * components that can act of that image, or versions of it.
  */
-function Image({ image }) {
+function Image() {
 
   const params = useParams();
 
   const [currImage, setCurrImage] = useState(null);
 
-  const imageId = params?.id || image?.id;
-  console.log("imageId passed into API call ----> ", imageId);
+  // { edit, newLink }
+  // edit possible values: "original", "rotate", "bw", "sepia"
+  const [currImageEdits, setCurrImageEdits] = useState([{
+    edit: "original",
+    imageId: params.id
+  }]);
+
+  // const imageId = params?.id || image?.id;
 
   useEffect(function getImageDataOnMount() {
     async function getImageDataFromApi() {
-      const imageData = await PixlyApi.getImageDetail(imageId);
-      console.log("Image data for singleImage from API ----> ", imageData);
-      setCurrImage(imageData);
+      const imageData = await PixlyApi.getImageDetail(params.id);
+      setCurrImage(imageData.image);
     }
     getImageDataFromApi();
-    console.log("*** In UseEffect in Image ****");
-  }, []);
+    console.log("currImage on Mount ----> ", currImage);
+  }, [currImageEdits]);
 
-  console.log("image on state -----> ", currImage);
+  /** Calls to API to rotate image and return new image link */
+  async function handleRotate() {
+    const editedImage = await PixlyApi.updateImage(currImage.id, { change: "rotate" });
+    console.log("editedImage-----> ", editedImage);
+    setCurrImage(i => editedImage.image);
+    setCurrImageEdits(s => [...s, { edit: "rotate", imageId: editedImage.image.id }]);
+    console.log("currImageEdits ------> ", currImageEdits);
+  }
+
+
+  function handleEditSubmit() {
+    //this will create a new object in the database with changed image
+    //setCurrImage to new returned image
+    // clear out currImageEdits
+  }
 
 
   const sliderSettings = {
@@ -41,6 +60,8 @@ function Image({ image }) {
     initialSlide: 1
   };
 
+  console.log("currImage -------> ******", currImage);
+
   return (
     <div className="Image">
       {currImage
@@ -50,7 +71,10 @@ function Image({ image }) {
               <ImageDisplay image={currImage} />
             </div>
             <div className="col-md-6">
-              <ImageEditToolbar image={currImage} />
+              <ImageEditToolbar
+                image={currImage.id}
+                handleRotate={handleRotate}
+                imageEdits={currImageEdits} />
             </div>
 
 

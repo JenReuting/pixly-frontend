@@ -20,7 +20,7 @@ class PixlyApi {
     const params = (method === "get")
       ? data
       : {};
-
+    console.log("in request ---> data ", data);
     try {
       // let apiData = await axios({ url, method, data, params });
       // console.log("apiData --------> ", apiData);
@@ -85,13 +85,22 @@ class PixlyApi {
  * Params: {changes : ['rotate', 'bw', 'sepia']}
  *
  * Ex resp:
- *  { "Image: b41aef8aa2e24426b2330f46eabcd05f deleted" }
+ *  { "Image: b41aef8aa2e24426b2330f46eabcd05f" }
  */
   static async updateImage(id, changes) {
-    let resp = await this.request(`images/${id}`, changes, 'PATCH');
+    const headers = { "Content-Type": "application/json" };
+    console.log("Image Update API Call: id, change ----> ", id, changes);
+    // const resp = await axios({
+    //   method: 'patch',
+    //   url: `images/${id}/`,
+    //   params: { change }
+    // });
+
+    let resp = await this.request(`/images/${id}`, { "changes": changes }, 'patch', headers);
+    console.log("request.data ---->>", resp.data);
     return resp.data;
   }
-}
+
 
 }
 

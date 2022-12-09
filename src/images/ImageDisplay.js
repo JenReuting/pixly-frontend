@@ -16,7 +16,7 @@ function ImageDisplay({ image }) {
   return (
     <div className="ImageDisplay">
       <div>
-        <img className="ImageDisplay-preview" src={image.image.url} alt={image.title} />
+        <img className="ImageDisplay-preview" src={image.url} alt={image.title} />
       </div>
     </div>
   );
