@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ImageDisplay from "../images/ImageDisplay";
 import PixlyApi from "../api/api";
-
+import ImageEditToolbar from "../images/ImageEditToolbar";
 import Slider from "react-slick";
 import "./Image.css";
 
@@ -32,21 +32,13 @@ function Image({ image }) {
   console.log("image on state -----> ", currImage);
 
 
-
-
-  const images = [
-    "https://pixlyapp.s3.amazonaws.com/cdddbf62f7b44273bb31957152aa5814.jpeg",
-    "https://pixlyapp.s3.amazonaws.com/da674ab56cf4408ab132af549095d25c.jpeg",
-    "https://pixlyapp.s3.amazonaws.com/e6758e592eed4f0c92523b25ff975321.jpeg"
-  ];
-
   const sliderSettings = {
     speed: 500,
     arrows: true,
     centerMode: true,
     dots: false,
     focusOnSelect: true,
-    initialSlide: images.length - 1
+    initialSlide: 1
   };
 
   return (
@@ -54,7 +46,14 @@ function Image({ image }) {
       {currImage
         ? (
           <div className="row">
-            <ImageDisplay image={currImage} />
+            <div className="col-md-6">
+              <ImageDisplay image={currImage} />
+            </div>
+            <div className="col-md-6">
+              <ImageEditToolbar image={currImage} />
+            </div>
+
+
           </div>
         ) : (
           <p>No image to display</p>

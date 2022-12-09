@@ -71,6 +71,28 @@ class PixlyApi {
     return resp.data;
   }
 
+  /** Delete an Image.
+   *
+   * Ex resp:
+   *  { "Image: b41aef8aa2e24426b2330f46eabcd05f deleted" }
+   */
+  static async deleteImage(id) {
+    let resp = await this.request(`images/${id}`, '', 'DELETE');
+    return resp.data;
+  }
+  /** Update an Image.
+ *
+ * Params: {changes : ['rotate', 'bw', 'sepia']}
+ *
+ * Ex resp:
+ *  { "Image: b41aef8aa2e24426b2330f46eabcd05f deleted" }
+ */
+  static async updateImage(id, changes) {
+    let resp = await this.request(`images/${id}`, changes, 'PATCH');
+    return resp.data;
+  }
+}
+
 }
 
 export default PixlyApi;

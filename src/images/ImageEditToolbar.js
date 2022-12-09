@@ -13,9 +13,9 @@ function ImageEditToolbar() {
 
   return (
     <div className="ImageEditToolbar">
-
+      <p>Toolbar</p>
     </div>
-  )
+  );
 }
 
 export default ImageEditToolbar;

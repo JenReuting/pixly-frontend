@@ -2,8 +2,6 @@ import React from "react";
 import ImageCard from "./ImageCard";
 import Masonry from "react-masonry-css";
 import Box from '@mui/material/Box';
-// import { styled } from '@mui/material/styles';
-// import { Masonry, Button, Paper } from '../@mui/material';
 import "./ImagesMasonry.css";
 
 /**
