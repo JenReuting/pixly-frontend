@@ -1,11 +1,9 @@
 import React from "react";
 import ImageCard from "./ImageCard";
-// import Masonry from "react-masonry-css";
+import Masonry from "react-masonry-css";
 import Box from '@mui/material/Box';
-import { styled } from '@mui/material/styles';
-import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
-import Masonry from '../@mui/material/Masonry';
+// import { styled } from '@mui/material/styles';
+// import { Masonry, Button, Paper } from '../@mui/material';
 import "./ImagesMasonry.css";
 
 /**
@@ -44,7 +42,6 @@ function ImagesMasonry({ images }) {
                 className="app-masonry-grid"
                 columns={4}
                 spacing={2}
-                defaultHeight={300}
               >
                 {images.map(i => (
                   <div key={i.id}>
