@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter } from "react-router-dom";
 import RoutesList from "./routes-nav/RoutesList";
+import NavBar from "./routes-nav/NavBar";
 import PixlyApi from "./api/api";
 
 /**
@@ -13,6 +14,7 @@ import PixlyApi from "./api/api";
 function PixlyApp() {
   const [currImage, setCurrImage] = useState(null);
 
+  /** Gets 30 first images from API endpoint */
   async function uploadImage(image) {
     let uploadedImage = await PixlyApi.postImage(image);
     setCurrImage(uploadedImage);
@@ -20,6 +22,7 @@ function PixlyApp() {
 
   return (
     <BrowserRouter>
+      <NavBar />
       <RoutesList uploadImage={uploadImage} />
     </BrowserRouter>
   );

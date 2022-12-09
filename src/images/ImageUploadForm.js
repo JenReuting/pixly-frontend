@@ -2,47 +2,62 @@ import React, { useState } from "react";
 import Alert from "../common/Alert";
 import "./ImageUpload.css";
 
-
+/** Form Component for uploading a new image
+ *
+ */
 function ImageUploadForm({ handleUpload }) {
+  const [imageInput, setImageInput] = useState(null);
 
-  // const [imageData, setImageData] = useState({
-  //   image: {},
-  //   title: "",
-  //   description: ""
-  // });
-  const [image, setImage] = useState(null);
+  const [imageFormData, setImageFormData] = useState({
+    title: "",
+    description: "",
+  });
 
-  const [imageLoading, setImageLoading] = useState(false);
+  const [saveCompleted, setSaveCompleted] = useState(false);
   const [formErrors, setFormErrors] = useState([]);
 
   async function handleSubmit(evt) {
     evt.preventDefault();
-    setImageLoading(true);
 
+    console.log("event.target.title -----> ", evt.target.title);
+
+    // create FormData instance to pass into API
     const formData = new FormData();
-    formData.append("image", image);
+    formData.append("image", imageInput);
+    formData.append("title", imageFormData.title);
+    formData.append("description", imageFormData.description);
 
-    // [...formData.entries()].forEach(e => console.log(e));
+    [...formData.entries()].forEach((e) => console.log("********------>", e));
 
     try {
       await handleUpload(formData);
-      setImageLoading(false);
     } catch (err) {
       setFormErrors(err);
-      setImageLoading(false);
+      setSaveCompleted(false);
       console.log("errors ----> ", err);
+      return;
     }
+
+    setImageFormData((f) => ({ ...f }));
+    console.log("ImageFormData from state ----> ", imageFormData);
+    setFormErrors([]);
+    setSaveCompleted(true);
   }
 
-  /** Update form fields */
-  function handleChange(evt) {
-    // const { name, value } = evt.target;
-    // setImageData(data => ({ ...data, [name]: value }));
+  function handleChangeImage(evt) {
     const file = evt.target.files[0];
-    setImage(f => file);
+    setImageInput((f) => file);
+  }
+
+  /** Handle form data changing, saving values to state */
+  function handleChangeFormData(evt) {
+    const { name, value } = evt.target;
+    setImageFormData((data) => ({
+      ...data,
+      [name]: value,
+    }));
     setFormErrors([]);
   }
-
 
   return (
     <div className="ImageUploadForm">
@@ -58,7 +73,7 @@ function ImageUploadForm({ handleUpload }) {
                   name="image"
                   type="file"
                   accept="image/*"
-                  onChange={handleChange}
+                  onChange={handleChangeImage}
                   required
                 />
               </div>
@@ -66,34 +81,38 @@ function ImageUploadForm({ handleUpload }) {
                 <label className="form-label">Title: </label>
                 <input
                   className="form-control"
-                  name="title"
                   type="text"
+                  name="title"
+                  value={imageFormData.title}
+                  onChange={handleChangeFormData}
                 />
               </div>
               <div className="mb-3">
                 <label className="form-label">Description: </label>
                 <input
                   className="form-control"
-                  name="description"
                   type="text"
+                  name="description"
+                  value={imageFormData.description}
+                  onChange={handleChangeFormData}
                 />
               </div>
 
-              {formErrors.length
-                ? <Alert type="danger" messages={formErrors} />
-                : null}
+              {formErrors.length ? (
+                <Alert type="danger" messages={formErrors} />
+              ) : null}
 
               <div className="d-grid">
-                <button className="btn btn-primary" type="submit">Submit</button>
-                {(imageLoading) && <p>Loading...</p>}
+                <button className="btn btn-primary" type="submit">
+                  Submit
+                </button>
+                {!saveCompleted && <p>Loading...</p>}
               </div>
             </form>
           </div>
         </div>
-
       </div>
     </div>
-
   );
 }
 
