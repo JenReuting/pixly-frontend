@@ -41,38 +41,35 @@ class PixlyApi {
    *  returns: public url (str) of posted image
   */
   static async postImage(image) {
-    console.log("image going into API from React ------> ", image.get("image"));
-
-
     const headers = { "Content-Type": "multipart/form-data" };
     let resp = await this.request(`upload`, image, "post", headers);
-
-    return resp.data.url;
+    return resp.data;
   }
 
   /**
    *  Gets 30 images from the database-- > will add pagination for additional later
-      Ex resp: {
-        "images": [
-          {
-            "creation_date": "Thu, 08 Dec 2022 21:11:33 GMT",
-            "description": null,
-            "first_name": "08cf0f209cc3470ca01ed351a929b2e6.jpeg",
-            "title": null,
-            "url": "https://pixlyapp.s3.amazonaws.com/08cf0f209cc3470ca01ed351a929b2e6.jpeg"
-          },
-          {
-            ...
-          }
-        ] }
+      Ex resp:
+        {"images":
+          [
+            { creation_date, description, ext, file_name, id, { metadata }, title, url },
+            { ... },
+          ]
+        }
   */
   static async getImages() {
-    let resp = await this.request('images');
-
-    console.log("response from API ---------> ", resp.data);
+    let resp = await this.request('images/');
     return resp.data;
   }
 
+  /** Gets detail for a single image. Takes in an image id, returns an image detail object
+   * Ex resp:
+   *  { creation_date, description, ext, file_name, id, { metadata }, title, url }
+   */
+
+  static async getImageDetail(id) {
+    let resp = await this.request(`images/${id}`);
+    return resp.data;
+  }
 
 }
 

@@ -16,8 +16,8 @@ function RoutesList({ uploadImage }) {
       <Routes>
         <Route path="/" element={<Homepage />} />
 
+        <Route path="/images/:id" element={<Image />} />
         <Route path="/images" element={<Images />} />
-        <Route path="/images/:imageId" element={<Image />} />
 
         <Route
           path="/upload"

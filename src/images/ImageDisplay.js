@@ -1,15 +1,22 @@
 import React from "react";
+import "./ImageDisplay.css";
+
+/** Displays a single image in large format (for editing)
+ *
+ * props: entire image object
+ * ex: { title, description, url, ext, file_name }
+ *
+ * Image Detail --> ImageDisplay
+*/
 
 function ImageDisplay({ image }) {
-  const imageUrl = `${image}`;
 
-  const testImage =
-    "https://pixlyapp.s3.amazonaws.com/1e6fa0c456044aeead063d97648a30e9.jpeg";
+  console.log("ImageDisplay, image -----> ", image);
 
   return (
-    <div className="ImageDisplay container">
+    <div className="ImageDisplay">
       <div>
-        <img src={testImage} alt="uploaded" />
+        <img className="ImageDisplay-preview" src={image.image.url} alt={image.title} />
       </div>
     </div>
   );

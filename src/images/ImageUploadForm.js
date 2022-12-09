@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { useNavigate, Navigate } from "react-router-dom";
 import Alert from "../common/Alert";
 import "./ImageUploadForm.css";
 
 /** Form Component for uploading a new image
  *
+ * Props: handleUpload() function from parent
  */
 function ImageUploadForm({ handleUpload }) {
   const [imageInput, setImageInput] = useState(null);
@@ -17,12 +19,12 @@ function ImageUploadForm({ handleUpload }) {
   const [savingStatus, setSavingStatus] = useState(null);
   const [formErrors, setFormErrors] = useState([]);
 
+  // const navigate = useNavigate();
+
   async function handleSubmit(evt) {
     evt.preventDefault();
 
     setSavingStatus("saving");
-
-    console.log("event.target.title -----> ", evt.target.title);
 
     // create FormData instance to pass into API
     const formData = new FormData();
@@ -30,10 +32,9 @@ function ImageUploadForm({ handleUpload }) {
     formData.append("title", imageFormData.title);
     formData.append("description", imageFormData.description);
 
-    [...formData.entries()].forEach((e) => console.log("********------>", e));
-
     try {
-      await handleUpload(formData);
+      const newImage = await handleUpload(formData);
+      // navigate()
     } catch (err) {
       setFormErrors(err);
       setSavingStatus("failed");
@@ -41,12 +42,11 @@ function ImageUploadForm({ handleUpload }) {
       return;
     }
 
-    setImageFormData((f) => ({ ...f }));
-    console.log("ImageFormData from state ----> ", imageFormData);
     setFormErrors([]);
     setSavingStatus("saved");
   }
 
+  /** Handle image change from form, saving the file to state */
   function handleChangeImage(evt) {
     const file = evt.target.files[0];
     setImageInput((f) => file);
@@ -111,7 +111,7 @@ function ImageUploadForm({ handleUpload }) {
                 </button>
                 {savingStatus === "saving" && (
                   <p className="mt-3 text-center font-weight-bold">
-                    Loading...
+                    Uploading Image...
                   </p>
                 )}
               </div>

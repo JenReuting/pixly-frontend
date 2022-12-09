@@ -18,6 +18,7 @@ function ImagesMasonry({ images }) {
           <div className="ImagesMasonry-list">
             {images.map(i => (
               <ImageCard
+                key={i.id}
                 url={i.url}
                 id={i.id}
                 title={i.title}
