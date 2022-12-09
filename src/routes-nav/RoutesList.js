@@ -1,7 +1,9 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import Homepage from "../homepage/Homepage";
-import ImageUpload from "../images/ImageUploadForm";
+import Homepage from "../pages/Homepage";
+import Images from "../pages/Images";
+import Image from "../pages/Image";
+import ImageUpload from "../pages/ImageUpload";
 
 /** Site-wide routes.
  *
@@ -9,14 +11,20 @@ import ImageUpload from "../images/ImageUploadForm";
  */
 
 function RoutesList({ uploadImage }) {
-
   return (
     <div className="RoutesList">
       <Routes>
         <Route path="/" element={<Homepage />} />
-        <Route path="/upload" element={<ImageUpload handleUpload={uploadImage} />} />
-        <Route path="*" element={<Navigate to="/" />} />
 
+        <Route path="/images" element={<Images />} />
+        <Route path="/images/:imageId" element={<Image />} />
+
+        <Route
+          path="/upload"
+          element={<ImageUpload handleUpload={uploadImage} />}
+        />
+
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </div>
   );
