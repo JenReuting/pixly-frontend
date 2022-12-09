@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Alert from "../common/Alert";
-import "./ImageUpload.css";
+import "./ImageUploadForm.css";
 
 /** Form Component for uploading a new image
  *
@@ -13,11 +13,14 @@ function ImageUploadForm({ handleUpload }) {
     description: "",
   });
 
-  const [saveCompleted, setSaveCompleted] = useState(false);
+  //savingStatus can be: null, "saving", "failed", "saved"
+  const [savingStatus, setSavingStatus] = useState(null);
   const [formErrors, setFormErrors] = useState([]);
 
   async function handleSubmit(evt) {
     evt.preventDefault();
+
+    setSavingStatus("saving");
 
     console.log("event.target.title -----> ", evt.target.title);
 
@@ -33,7 +36,7 @@ function ImageUploadForm({ handleUpload }) {
       await handleUpload(formData);
     } catch (err) {
       setFormErrors(err);
-      setSaveCompleted(false);
+      setSavingStatus("failed");
       console.log("errors ----> ", err);
       return;
     }
@@ -41,7 +44,7 @@ function ImageUploadForm({ handleUpload }) {
     setImageFormData((f) => ({ ...f }));
     console.log("ImageFormData from state ----> ", imageFormData);
     setFormErrors([]);
-    setSaveCompleted(true);
+    setSavingStatus("saved");
   }
 
   function handleChangeImage(evt) {
@@ -106,7 +109,11 @@ function ImageUploadForm({ handleUpload }) {
                 <button className="btn btn-primary" type="submit">
                   Submit
                 </button>
-                {!saveCompleted && <p>Loading...</p>}
+                {savingStatus === "saving" && (
+                  <p className="mt-3 text-center font-weight-bold">
+                    Loading...
+                  </p>
+                )}
               </div>
             </form>
           </div>
