@@ -21,11 +21,11 @@ import "./ImageCard.css";
  */
 function ImageCard({ url, id, title }) {
 
-  const src = `"${url}"`;
+  const src = `${url}`;
 
   return (
     <Link className="ImageCard" to={`/images/${id}`}>
-      <img className="ImageCard-thumbnail img-thumbnail" src={src} alt={title} />
+      <img className="ImageCard-thumbnail" src={url} alt={title} />
     </Link>
   );
 }

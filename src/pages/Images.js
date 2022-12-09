@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import PixlyApi from "../api/api";
 import ImagesMasonry from "../images/ImagesMasonry";
 import LoadingSpinner from "../common/LoadingSpinner";
+
 import "./Images.css";
 
 function Images() {
@@ -23,7 +24,7 @@ function Images() {
 
   return (
     <div className="Images text-center">
-      <ImagesMasonry images={imagesList} />
+      <ImagesMasonry images={imagesList.images} />
     </div>
   );
 }

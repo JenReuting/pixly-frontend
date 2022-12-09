@@ -1,0 +1,15 @@
+.app-masonry-grid {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 0px 10px;
+  width: auto;
+}
+.app-masonry-grid_column {
+  padding: 0px 30px;
+  background-clip: padding-box;
+}
+.app-masonry-grid_column > div {
+  background: white;
+  margin-bottom: 30px;
+}
