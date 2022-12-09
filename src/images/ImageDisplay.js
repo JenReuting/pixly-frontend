@@ -1,14 +1,15 @@
 import React from "react";
 
-function ImageDisplay(image) {
-  const imageUrl = `"${image}"`;
+function ImageDisplay({ image }) {
+  const imageUrl = `${image}`;
 
-  console.log("Image to display-------> ", imageUrl);
+  const testImage =
+    "https://pixlyapp.s3.amazonaws.com/1e6fa0c456044aeead063d97648a30e9.jpeg";
 
   return (
     <div className="ImageDisplay container">
       <div>
-        <img src={imageUrl} alt="uploaded image" />
+        <img src={testImage} alt="uploaded" />
       </div>
     </div>
   );
