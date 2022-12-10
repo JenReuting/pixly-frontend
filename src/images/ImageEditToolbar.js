@@ -1,10 +1,11 @@
 import React, { useState } from "react";
+import "./ImageEditToolbar.css";
 
 /** Renders the image edit controls
  *
  * State: savingStatus --> shows loading icon during API requests
  */
-function ImageEditToolbar({ imageId, handleRotate }) {
+function ImageEditToolbar({ handleRotate, handleBW, handleSepia }) {
 
   //savingStatus can be: null, "saving", "failed", "saved"
   const [savingStatus, setSavingStatus] = useState(null);
@@ -18,31 +19,81 @@ function ImageEditToolbar({ imageId, handleRotate }) {
   function handleSubmitRotate(evt) {
     evt.preventDefault();
     setSavingStatus("saving");
-
     try {
       handleRotate();
-
     } catch (err) {
       setFormErrors(err);
       setSavingStatus("failed");
       console.log("errors from Edit Toolbar ----> ", err);
       return;
     }
+    setSavingStatus("saved");
+    setFormErrors([]);
+  }
 
+  function handleSubmitBW(evt) {
+    evt.preventDefault();
+    setSavingStatus("saving");
+    try {
+      handleBW();
+    } catch (err) {
+      setFormErrors(err);
+      setSavingStatus("failed");
+      console.log("errors from Edit Toolbar ----> ", err);
+      return;
+    }
+    setSavingStatus("saved");
+    setFormErrors([]);
+  }
+
+  function handleSubmitSepia(evt) {
+    evt.preventDefault();
+    setSavingStatus("saving");
+    try {
+      handleSepia();
+    } catch (err) {
+      setFormErrors(err);
+      setSavingStatus("failed");
+      console.log("errors from Edit Toolbar ----> ", err);
+      return;
+    }
     setSavingStatus("saved");
     setFormErrors([]);
   }
 
   return (
-    <div className="ImageEditToolbar card">
-      <div className="card-body">
-        <button className="btn btn-secondary"
-          type="submit"
-          onClick={handleSubmitRotate}>
-          Rotate
-        </button>
+    <div className="ImageEditToolbar">
+      <div className="card">
+        <div className="card-body">
+          <div className="edit-tool">
+            <button className="btn btn-primary m-3"
+              type="submit"
+              onClick={handleSubmitRotate}>
+              Rotate
+            </button>
+          </div>
+          <div className="edit-tool">
+            <button className="btn btn-primary m-3"
+              type="submit"
+              onClick={handleSubmitBW}>
+              Convert to Black & White
+            </button>
+          </div>
+          <div className="edit-tool">
+            <button className="btn btn-primary m-3"
+              type="submit"
+              onClick={handleSubmitSepia}>
+              Convert to Sepia
+            </button>
+          </div>
+
+        </div>
       </div>
-      <p>Toolbar</p>
+      {savingStatus === "saving" && (
+        <p className="mt-3 text-center font-weight-bold">
+          Editing Image...
+        </p>
+      )}
     </div>
   );
 }

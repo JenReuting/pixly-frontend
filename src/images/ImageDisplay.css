@@ -1,4 +1,6 @@
 .ImageDisplay-preview {
+  margin-left: 80px;
+  margin-top: 2rem;
   max-width: 500px;
   max-height: 500px;
 }

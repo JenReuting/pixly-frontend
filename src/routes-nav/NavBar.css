@@ -1,4 +1,10 @@
 .nav-logo {
+  margin-left: 30px;
   width: 40px;
   height: 32px;
+}
+
+ul {
+  margin: auto;
+  color: white;
 }

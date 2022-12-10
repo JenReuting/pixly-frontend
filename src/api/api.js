@@ -87,17 +87,9 @@ class PixlyApi {
  * Ex resp:
  *  { "Image: b41aef8aa2e24426b2330f46eabcd05f" }
  */
-  static async updateImage(id, changes) {
+  static async updateImage(id, change) {
     const headers = { "Content-Type": "application/json" };
-    console.log("Image Update API Call: id, change ----> ", id, changes);
-    // const resp = await axios({
-    //   method: 'patch',
-    //   url: `images/${id}/`,
-    //   params: { change }
-    // });
-
-    let resp = await this.request(`/images/${id}`, { "changes": changes }, 'patch', headers);
-    console.log("request.data ---->>", resp.data);
+    let resp = await this.request(`images/${id}`, change, 'patch', headers);
     return resp.data;
   }
 
